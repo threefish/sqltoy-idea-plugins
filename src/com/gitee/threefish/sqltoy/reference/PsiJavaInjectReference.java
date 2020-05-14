@@ -13,45 +13,45 @@ import org.jetbrains.annotations.Nullable;
  */
 public class PsiJavaInjectReference implements PsiReference {
 
-    PsiElement javaElement;
-    PsiElement propsElement;
+    PsiElement formElemnet;
+    PsiElement bingdElement;
 
-    public PsiJavaInjectReference(PsiElement javaElement, PsiElement propsElement) {
-        this.javaElement = javaElement;
-        this.propsElement = propsElement;
+    public PsiJavaInjectReference(PsiElement formElemnet, PsiElement bingdElement) {
+        this.formElemnet = formElemnet;
+        this.bingdElement = bingdElement;
     }
 
     @Override
     public PsiElement getElement() {
-        return this.javaElement;
+        return this.formElemnet;
     }
 
     @Override
     public TextRange getRangeInElement() {
-        String text = this.javaElement.getText();
+        String text = this.formElemnet.getText();
         boolean match = text.startsWith("\"") && text.endsWith("\"");
         final int len = 2;
         if (match && text.length() > len) {
-            return new TextRange(1, this.javaElement.getTextLength() - 1);
+            return new TextRange(1, this.formElemnet.getTextLength() - 1);
         }
-        return new TextRange(0, this.javaElement.getTextLength());
+        return new TextRange(0, this.formElemnet.getTextLength());
     }
 
     @Nullable
     @Override
     public PsiElement resolve() {
-        return propsElement;
+        return bingdElement;
     }
 
     @NotNull
     @Override
     public String getCanonicalText() {
-        return propsElement.getText();
+        return bingdElement.getText();
     }
 
     @Override
     public PsiElement handleElementRename(String s) throws IncorrectOperationException {
-        return javaElement;
+        return formElemnet;
     }
 
     @Override

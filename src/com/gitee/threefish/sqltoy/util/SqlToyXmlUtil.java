@@ -7,10 +7,7 @@ import com.intellij.psi.impl.source.tree.java.PsiReferenceExpressionImpl;
 import com.intellij.psi.impl.source.xml.XmlFileImpl;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.util.PsiUtilBase;
-import com.intellij.psi.xml.XmlFile;
-import com.intellij.psi.xml.XmlTag;
-import com.intellij.psi.xml.XmlText;
-import com.intellij.psi.xml.XmlToken;
+import com.intellij.psi.xml.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -23,6 +20,9 @@ import java.util.Objects;
  * @date: 2020/5/12
  */
 public class SqlToyXmlUtil {
+
+    public static final String EXT="sql.xml";
+
     /**
      * 判断java字符串是否是sql
      *
@@ -120,9 +120,10 @@ public class SqlToyXmlUtil {
                                         List<XmlTag> xmlTags = PsiTreeUtil.getChildrenOfAnyType(child1, XmlTag.class);
                                         for (XmlTag xmlTag : xmlTags) {
                                             if ("sql".equals(xmlTag.getName())) {
-                                                String id = xmlTag.getAttribute("id").getValue();
+                                                XmlAttribute xmlAttribute = xmlTag.getAttribute("id");
+                                                String id = xmlAttribute.getValue();
                                                 if (key.equals(id)) {
-                                                    result.add(xmlTag.getNavigationElement());
+                                                    result.add(xmlAttribute.getValueElement());
                                                 }
                                             }
                                         }

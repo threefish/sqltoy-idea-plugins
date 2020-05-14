@@ -27,12 +27,12 @@
   <extensions defaultExtensionNs="com.intellij">
     <!--语言注入-->
     <multiHostInjector implementation="com.gitee.threefish.sqltoy.injector.SqlToyXmlMultiHostInjector"/>
-<!--    &lt;!&ndash;@SqlXml快速跳转sql模版文件&ndash;&gt;-->
-<!--    <codeInsight.lineMarkerProvider language="JAVA"-->
-<!--                                    implementationClass="com.gitee.threefish.sqltoy.linemarker.Java2XmlLineMarkerProvider"/>-->
     <!--XML文件跳转-->
     <psi.referenceContributor
             implementation="com.gitee.threefish.sqltoy.reference.SqlToyJavaXmlReferenceContributor"/>
+<!--    &lt;!&ndash;XML文件跳转&ndash;&gt;-->
+<!--    <psi.referenceContributor-->
+<!--            implementation="com.gitee.threefish.sqltoy.reference.SqlToyXmlJavaReferenceContributor"/>-->
   </extensions>
 
   <actions>

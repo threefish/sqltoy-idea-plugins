@@ -25,10 +25,10 @@ import java.util.Objects;
 public class SqlToyJavaXmlReferenceContributor extends PsiReferenceContributor {
     @Override
     public void registerReferenceProviders(@NotNull PsiReferenceRegistrar psiReferenceRegistrar) {
-        psiReferenceRegistrar.registerReferenceProvider(PlatformPatterns.psiElement(PsiLiteralExpression.class), new NutzInjectPsiReferenceProvider());
+        psiReferenceRegistrar.registerReferenceProvider(PlatformPatterns.psiElement(PsiLiteralExpression.class), new JavaInjectPsiReferenceProvider());
     }
 
-    class NutzInjectPsiReferenceProvider extends PsiReferenceProvider {
+    class JavaInjectPsiReferenceProvider extends PsiReferenceProvider {
         private static final String JAVA_DAO_REF = "org.sagacity.sqltoy.dao.SqlToyLazyDao";
 
         @NotNull
@@ -52,7 +52,7 @@ public class SqlToyJavaXmlReferenceContributor extends PsiReferenceContributor {
                 }
                 if (SqlToyXmlUtil.isInjectXml(literalExpression, fieldStrings)) {
                     Project project = element.getProject();
-                    final Collection<VirtualFile> virtualFiles = FilenameIndex.getAllFilesByExt(project, "sql.xml", getSearchScope(project, element));
+                    final Collection<VirtualFile> virtualFiles = FilenameIndex.getAllFilesByExt(project, SqlToyXmlUtil.EXT, getSearchScope(project, element));
                     final List<PsiElement> elements = SqlToyXmlUtil.findXmlPsiElement(project, virtualFiles, value);
                     return elements.stream().map(psiElement -> new PsiJavaInjectReference(element, psiElement)).toArray(PsiReference[]::new);
                 }
