@@ -91,7 +91,7 @@ public class SqlToyXmlUtil {
      * @param fields
      * @return
      */
-    public static boolean isInjectXml(PsiLiteralExpression literalExpression, List<String> fields) {
+    public static boolean isInjectXml(PsiElement literalExpression, List<String> fields) {
         PsiElement p1 = literalExpression.getParent();
         if (!(p1 instanceof PsiExpressionList)) {
             return false;
@@ -102,6 +102,21 @@ public class SqlToyXmlUtil {
         }
         String text = p2.getText();
         return fields.stream().filter(s -> (text.startsWith(s + ".") || text.startsWith("super." + s + ".") || text.startsWith("this." + s + "."))).findAny().isPresent();
+    }
+
+    public static boolean isNewQueryExecutor (PsiLiteralExpression literalExpression,List<String> fields) {
+        PsiElement p1 = literalExpression.getParent();
+        if (!(p1 instanceof PsiExpressionList)) {
+            return false;
+        }
+        PsiElement p2 = p1.getParent();
+        if (!(p2 instanceof PsiNewExpression)) {
+            return false;
+        }
+        if(!(p2.getText().startsWith("new QueryExecutor"))){
+            return false;
+        }
+        return isInjectXml(p2,fields);
     }
 
     public static List<PsiElement> findXmlPsiElement(Project project, Collection<VirtualFile> virtualFiles, String key) {

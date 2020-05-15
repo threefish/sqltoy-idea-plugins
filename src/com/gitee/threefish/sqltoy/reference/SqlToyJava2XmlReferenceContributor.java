@@ -17,12 +17,11 @@ import java.util.*;
  * @author 黄川 huchuc@vip.qq.com
  * @date: 2020/5/12
  */
-public class SqlToyJavaXmlReferenceContributor extends PsiReferenceContributor {
+public class SqlToyJava2XmlReferenceContributor extends PsiReferenceContributor {
     @Override
     public void registerReferenceProviders(@NotNull PsiReferenceRegistrar psiReferenceRegistrar) {
         psiReferenceRegistrar.registerReferenceProvider(PlatformPatterns.psiElement(PsiLiteralExpression.class), new JavaInjectPsiReferenceProvider());
     }
-
 
 
     class JavaInjectPsiReferenceProvider extends PsiReferenceProvider {
@@ -45,7 +44,9 @@ public class SqlToyJavaXmlReferenceContributor extends PsiReferenceContributor {
                         fieldStrings.add(field.getName());
                     }
                 }
-                if (SqlToyXmlUtil.isInjectXml(literalExpression, fieldStrings)) {
+                boolean a = SqlToyXmlUtil.isInjectXml(literalExpression, fieldStrings);
+                boolean b = SqlToyXmlUtil.isNewQueryExecutor(literalExpression,fieldStrings);
+                if (a || b) {
                     Project project = element.getProject();
                     final Collection<VirtualFile> virtualFiles = FilenameIndex.getAllFilesByExt(project, SqlToyXmlUtil.EXT, SearchUtil.getSearchScope(project, element));
                     final List<PsiElement> elements = SqlToyXmlUtil.findXmlPsiElement(project, virtualFiles, value);

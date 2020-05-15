@@ -37,7 +37,7 @@
                                         implementationClass="com.gitee.threefish.sqltoy.linemarker.Xml2JavaLineMarkerProvider"/>
         <!--XML文件跳转-->
         <psi.referenceContributor
-                implementation="com.gitee.threefish.sqltoy.reference.SqlToyJavaXmlReferenceContributor"/>
+                implementation="com.gitee.threefish.sqltoy.reference.SqlToyJava2XmlReferenceContributor"/>
     </extensions>
 
     <actions>
