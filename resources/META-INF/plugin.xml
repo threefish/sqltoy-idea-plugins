@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.gitee.threefish.sqltoy.plugin.id</id>
     <name>sqltoy-idea-plugins</name>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <vendor email="huchuc@vip.qq.com" url="https://gitee.com/threefish/">threefish</vendor>
     <description>
         <![CDATA[
@@ -9,15 +9,34 @@
       <br>
       sqltoy-orm是比hibernate+myBatis更加贴合项目的orm框架，具有hibernate增删改和对象加载的便捷性同时也具有比myBatis更加灵活优雅的自定义sql查询功能.
        <br>
-      1.支持xml定义跳转java调用语句
-      2.java调用跳转xml定义
-      3.SQL语句高亮
+      <ul>
+         <li><h4>English</h4></li>
+         <li>1.Support xml definition jump java call statement</li>
+         <li>2.java call jump xml definition </li>
+         <li>3.SQL statement highlighting </li>
+       </ul>
+       <ul>
+         <li><h4>中文</h4></li>
+         <li>1.支持xml定义跳转java调用语句</li>
+         <li>2.java调用跳转xml定义 </li>
+         <li>3.SQL语句高亮 </li>
+       </ul>
     ]]></description>
     <change-notes>
         <![CDATA[
-      sqltoy-orm is an orm framework that is more suitable for projects than hibernate + my Batis. It has the convenience of adding, deleting, modifying and loading objects, and also has more flexible and elegant custom SQL query functions than my Batis.
-      <br>
-      sqltoy-orm是比hibernate+myBatis更加贴合项目的orm框架，具有hibernate增删改和对象加载的便捷性同时也具有比myBatis更加灵活优雅的自定义sql查询功能
+       <b>1.0.1</b>
+       <ul>
+         <li><h4>English</h4></li>
+         <li>1.Support xml definition jump java call statement</li>
+         <li>2.java call jump xml definition </li>
+         <li>3.SQL statement highlighting </li>
+       </ul>
+       <ul>
+         <li><h4>中文</h4></li>
+         <li>1.支持xml定义跳转java调用语句</li>
+         <li>2.java调用跳转xml定义 </li>
+         <li>3.SQL语句高亮 </li>
+       </ul>
     ]]>
     </change-notes>
     <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
