@@ -8,7 +8,7 @@ import com.intellij.util.Function;
  */
 public class FunctionTooltip implements Function {
 
-    String msg = "点我快速切换至对应文件";
+    String msg = "点我快速跳转";
 
     public FunctionTooltip() {
     }

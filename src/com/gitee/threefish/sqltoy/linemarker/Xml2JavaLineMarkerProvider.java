@@ -17,14 +17,14 @@ import javax.swing.*;
  * @author 黄川 huchuc@vip.qq.com
  * @date: 2020/5/12
  */
-public class Java2XmlLineMarkerProvider implements LineMarkerProvider {
+public class Xml2JavaLineMarkerProvider implements LineMarkerProvider {
 
     @Nullable
     @Override
     public LineMarkerInfo getLineMarkerInfo(@NotNull PsiElement psiElement) {
         try {
             if (SqlToyXmlUtil.isSqToyXml(psiElement)) {
-                Icon icon = AllIcons.FileTypes.Xml;
+                Icon icon = AllIcons.FileTypes.Java;
                 return new LineMarkerInfo<>(psiElement, psiElement.getTextRange(), icon,
                         new FunctionTooltip(), new SqlToyXmlNavigationHandler(),
                         GutterIconRenderer.Alignment.LEFT);

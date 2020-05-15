@@ -23,16 +23,16 @@
        on how to target different products -->
   <depends>com.intellij.modules.platform</depends>
   <depends>com.intellij.modules.java</depends>
+  <depends>com.intellij.modules.xml</depends>
 
   <extensions defaultExtensionNs="com.intellij">
     <!--语言注入-->
     <multiHostInjector implementation="com.gitee.threefish.sqltoy.injector.SqlToyXmlMultiHostInjector"/>
+  <!--XML跳转java&-->
+    <codeInsight.lineMarkerProvider language="XML" implementationClass="com.gitee.threefish.sqltoy.linemarker.Xml2JavaLineMarkerProvider"/>
     <!--XML文件跳转-->
     <psi.referenceContributor
             implementation="com.gitee.threefish.sqltoy.reference.SqlToyJavaXmlReferenceContributor"/>
-<!--    &lt;!&ndash;XML文件跳转&ndash;&gt;-->
-<!--    <psi.referenceContributor-->
-<!--            implementation="com.gitee.threefish.sqltoy.reference.SqlToyXmlJavaReferenceContributor"/>-->
   </extensions>
 
   <actions>

@@ -4,12 +4,10 @@ import com.gitee.threefish.sqltoy.util.SqlToyXmlUtil;
 import com.intellij.lang.Language;
 import com.intellij.lang.injection.MultiHostInjector;
 import com.intellij.lang.injection.MultiHostRegistrar;
-import com.intellij.lang.xml.XmlASTFactory;
 import com.intellij.psi.ElementManipulators;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiLanguageInjectionHost;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.psi.xml.XmlText;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
@@ -31,7 +29,7 @@ public class SqlToyXmlMultiHostInjector implements MultiHostInjector {
             if (psiElement instanceof XmlTag) {
                 XmlTag tag = (XmlTag) psiElement;
                 if (SQL_VALUE_TAG.equals(tag.getName())) {
-                    registrarInjecting(SQL_LANGUAGE, multiHostRegistrar, SqlToyXmlUtil.findXmlTexts(psiElement.getChildren()), null, null);
+                    registrarInjecting(SQL_LANGUAGE, multiHostRegistrar, SqlToyXmlUtil.findXmlTexts(psiElement.getChildren()), "<![CDATA[", "]]>");
                 }
             }
         }

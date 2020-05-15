@@ -2,17 +2,21 @@ package com.gitee.threefish.sqltoy.linemarker.navigation;
 
 import com.intellij.codeInsight.daemon.GutterIconNavigationHandler;
 import com.intellij.codeInsight.navigation.NavigationUtil;
+import com.intellij.openapi.editor.EditorCoreUtil;
+import com.intellij.openapi.editor.EditorModificationUtil;
+import com.intellij.openapi.editor.actions.EditorActionUtil;
+import com.intellij.openapi.editor.ex.util.EditorUIUtil;
+import com.intellij.openapi.editor.ex.util.EditorUtil;
 import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
-import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiManager;
+import com.intellij.psi.util.PsiUtil;
 import com.intellij.ui.awt.RelativePoint;
 
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author 黄川 huchuc@vip.qq.com
@@ -21,6 +25,7 @@ import java.util.List;
 public abstract class AbstractNavigationHandler implements GutterIconNavigationHandler {
 
     private final String title = "请选择";
+
     /**
      * 是否匹配跳转条件
      *
@@ -35,25 +40,21 @@ public abstract class AbstractNavigationHandler implements GutterIconNavigationH
      * @param psiElement
      * @return
      */
-    public abstract List<VirtualFile> findTemplteFileList(PsiElement psiElement);
+    public abstract List<PsiElement> findReferences(PsiElement psiElement);
 
 
     @Override
     public void navigate(MouseEvent mouseEvent, PsiElement psiElement) {
         if (canNavigate(psiElement)) {
             final Project project = psiElement.getProject();
-            final List<VirtualFile> fileList = findTemplteFileList(psiElement);
-            if (fileList.size() == 1) {
-                FileEditorManager.getInstance(project).openFile(fileList.get(0), true);
-            } else if (fileList.size() > 1) {
-                final List<VirtualFile> infos = new ArrayList<>(fileList);
-                List<PsiElement> elements = new ArrayList<>();
-                PsiManager psiManager = PsiManager.getInstance(psiElement.getProject());
-                infos.forEach(virtualFile -> elements.add(psiManager.findFile(virtualFile).getNavigationElement()));
-                NavigationUtil.getPsiElementPopup(elements.toArray(new PsiElement[0]), title).show(new RelativePoint(mouseEvent));
+            final List<PsiElement> psiElements = findReferences(psiElement);
+            if (psiElements.size() == 1) {
+                FileEditorManager.getInstance(project).openFile(PsiUtil.getVirtualFile(psiElements.get(0)), true);
+            } else if (psiElements.size() > 1) {
+                NavigationUtil.getPsiElementPopup(psiElements.toArray(new PsiElement[0]), title).show(new RelativePoint(mouseEvent));
             } else {
-                if (fileList == null || fileList.size() <= 0) {
-                    Messages.showErrorDialog("没有找到这个资源文件，请检查！", "错误提示");
+                if (Objects.isNull(psiElements) || psiElements.size() <= 0) {
+                    Messages.showErrorDialog("没有找到这个调用的方法，请检查！", "错误提示");
                 }
             }
         }
