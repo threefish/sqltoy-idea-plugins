@@ -1,6 +1,6 @@
 package com.gitee.threefish.sqltoy.linemarker.navigation;
 
-import com.gitee.threefish.sqltoy.util.SearchScopeUtil;
+import com.gitee.threefish.sqltoy.util.SearchUtil;
 import com.gitee.threefish.sqltoy.util.SqlToyXmlUtil;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -31,7 +31,7 @@ public class SqlToyXmlNavigationHandler  extends AbstractNavigationHandler {
         if (xmlTag.getName().equals("sql") && Objects.nonNull(xmlAttribute)) {
             String id = xmlAttribute.getValue();
             Project project = psiElement.getProject();
-            final Collection<VirtualFile> virtualFiles = FilenameIndex.getAllFilesByExt(project, "java", SearchScopeUtil.getSearchScope(project, psiElement));
+            final Collection<VirtualFile> virtualFiles = FilenameIndex.getAllFilesByExt(project, "java", SearchUtil.getSearchScope(project, psiElement));
             return SqlToyXmlUtil.findJavaPsiElement(project, virtualFiles, id);
         }
         return Arrays.asList();

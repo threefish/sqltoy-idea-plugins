@@ -1,6 +1,6 @@
 package com.gitee.threefish.sqltoy.reference;
 
-import com.gitee.threefish.sqltoy.util.SearchScopeUtil;
+import com.gitee.threefish.sqltoy.util.SearchUtil;
 import com.gitee.threefish.sqltoy.util.SqlToyXmlUtil;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -11,10 +11,7 @@ import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.ProcessingContext;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * @author 黄川 huchuc@vip.qq.com
@@ -26,6 +23,8 @@ public class SqlToyJavaXmlReferenceContributor extends PsiReferenceContributor {
         psiReferenceRegistrar.registerReferenceProvider(PlatformPatterns.psiElement(PsiLiteralExpression.class), new JavaInjectPsiReferenceProvider());
     }
 
+
+
     class JavaInjectPsiReferenceProvider extends PsiReferenceProvider {
 
 
@@ -36,16 +35,19 @@ public class SqlToyJavaXmlReferenceContributor extends PsiReferenceContributor {
             Object literalExpressionValue = literalExpression.getValue();
             String value = literalExpressionValue instanceof String ? (String) literalExpressionValue : null;
             if (Objects.nonNull(value) && !value.contains(" ")) {
-                PsiField[] fields = PsiTreeUtil.getParentOfType(element, PsiClass.class).getFields();
+                PsiClass psiClass = PsiTreeUtil.getParentOfType(element, PsiClass.class);
+                PsiField[] fields = psiClass.getFields();
+                List<PsiField> extendsClassFields = SearchUtil.getExtendsClassFields(psiClass);
+                extendsClassFields.addAll(Arrays.asList(fields));
                 List<String> fieldStrings = new ArrayList<>();
-                for (PsiField field : fields) {
+                for (PsiField field : extendsClassFields) {
                     if (SqlToyXmlUtil.isSqlToyLazyDao(field)) {
                         fieldStrings.add(field.getName());
                     }
                 }
                 if (SqlToyXmlUtil.isInjectXml(literalExpression, fieldStrings)) {
                     Project project = element.getProject();
-                    final Collection<VirtualFile> virtualFiles = FilenameIndex.getAllFilesByExt(project, SqlToyXmlUtil.EXT, SearchScopeUtil.getSearchScope(project, element));
+                    final Collection<VirtualFile> virtualFiles = FilenameIndex.getAllFilesByExt(project, SqlToyXmlUtil.EXT, SearchUtil.getSearchScope(project, element));
                     final List<PsiElement> elements = SqlToyXmlUtil.findXmlPsiElement(project, virtualFiles, value);
                     return elements.stream().map(psiElement -> new PsiJavaInjectReference(element, psiElement)).toArray(PsiReference[]::new);
                 }
@@ -55,4 +57,5 @@ public class SqlToyJavaXmlReferenceContributor extends PsiReferenceContributor {
 
 
     }
+
 }

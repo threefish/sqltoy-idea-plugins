@@ -164,6 +164,7 @@ public class SqlToyXmlUtil {
                 for (PsiClass psiClass : psiClassList) {
                     List<String> keys = new ArrayList<>();
                     List<PsiField> childrenOfAnyType = PsiTreeUtil.getChildrenOfAnyType(psiClass, PsiField.class);
+                    childrenOfAnyType.addAll(SearchUtil.getExtendsClassFields(psiClass));
                     for (PsiField field : childrenOfAnyType) {
                         if (SqlToyXmlUtil.isSqlToyLazyDao(field)) {
                             keys.add(field.getName());
