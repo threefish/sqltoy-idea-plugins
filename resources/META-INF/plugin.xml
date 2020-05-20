@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.gitee.threefish.sqltoy.plugin.id</id>
-    <name>sqltoy-idea-plugins</name>
-    <version>1.0.1</version>
+    <name>sqltoy-orm-tool</name>
+    <version>1.0.2</version>
     <vendor email="huchuc@vip.qq.com" url="https://gitee.com/threefish/">threefish</vendor>
     <description>
         <![CDATA[

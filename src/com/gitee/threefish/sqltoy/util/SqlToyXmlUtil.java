@@ -104,7 +104,7 @@ public class SqlToyXmlUtil {
         return fields.stream().filter(s -> (text.startsWith(s + ".") || text.startsWith("super." + s + ".") || text.startsWith("this." + s + "."))).findAny().isPresent();
     }
 
-    public static boolean isNewQueryExecutor (PsiLiteralExpression literalExpression,List<String> fields) {
+    public static boolean isNewQueryExecutor(PsiLiteralExpression literalExpression, List<String> fields) {
         PsiElement p1 = literalExpression.getParent();
         if (!(p1 instanceof PsiExpressionList)) {
             return false;
@@ -113,10 +113,10 @@ public class SqlToyXmlUtil {
         if (!(p2 instanceof PsiNewExpression)) {
             return false;
         }
-        if(!(p2.getText().startsWith("new QueryExecutor"))){
+        if (!(p2.getText().startsWith("new QueryExecutor"))) {
             return false;
         }
-        return isInjectXml(p2,fields);
+        return isInjectXml(p2, fields);
     }
 
     public static List<PsiElement> findXmlPsiElement(Project project, Collection<VirtualFile> virtualFiles, String key) {
@@ -158,11 +158,13 @@ public class SqlToyXmlUtil {
 
     public static boolean isSqlToyLazyDao(PsiField field) {
         PsiTypeElement typeElement = field.getTypeElement();
-        PsiJavaCodeReferenceElement innermostComponentReferenceElement = typeElement.getInnermostComponentReferenceElement();
-        if (Objects.nonNull(innermostComponentReferenceElement)) {
-            String canonicalText = innermostComponentReferenceElement.getCanonicalText();
-            if (JAVA_DAO_REF.equals(canonicalText)) {
-                return true;
+        if (Objects.nonNull(typeElement)) {
+            PsiJavaCodeReferenceElement innermostComponentReferenceElement = typeElement.getInnermostComponentReferenceElement();
+            if (Objects.nonNull(innermostComponentReferenceElement)) {
+                String canonicalText = innermostComponentReferenceElement.getCanonicalText();
+                if (JAVA_DAO_REF.equals(canonicalText)) {
+                    return true;
+                }
             }
         }
         return false;
