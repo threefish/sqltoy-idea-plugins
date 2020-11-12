@@ -3,8 +3,8 @@ package com.gitee.threefish.sqltoy.util;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
-import com.intellij.psi.impl.source.tree.java.PsiLiteralExpressionImpl;
 import com.intellij.psi.impl.source.xml.XmlFileImpl;
+import com.intellij.psi.util.PsiLiteralUtil;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlFile;
@@ -230,7 +230,7 @@ public class SqlToyXmlUtil {
                 if (Objects.nonNull(psiExpressionList)) {
                     List<PsiLiteralExpression> psiLiteralExpressions = new ArrayList<>(PsiTreeUtil.getChildrenOfAnyType(psiExpressionList, PsiLiteralExpression.class));
                     for (PsiLiteralExpression psiLiteralExpression : psiLiteralExpressions) {
-                        if (!psiLiteralExpression.getText().contains(" ") && id.equals(((PsiLiteralExpressionImpl) psiLiteralExpression).getInnerText())) {
+                        if (!psiLiteralExpression.getText().contains(" ") && id.equals(PsiLiteralUtil.getStringLiteralContent(psiLiteralExpression))) {
                             return psiLiteralExpression;
                         }
                     }
