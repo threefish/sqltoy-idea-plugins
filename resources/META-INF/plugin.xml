@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.gitee.threefish.sqltoy.plugin.id</id>
     <name>sqltoy-orm-tool</name>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <vendor email="huchuc@vip.qq.com" url="https://gitee.com/threefish/">threefish</vendor>
     <description>
         <![CDATA[
@@ -24,18 +24,14 @@
     ]]></description>
     <change-notes>
         <![CDATA[
-       <b>1.0.1</b>
+       <b>1.0.3</b>
        <ul>
          <li><h4>English</h4></li>
-         <li>1.Support xml definition jump java call statement</li>
-         <li>2.java call jump xml definition </li>
-         <li>3.SQL statement highlighting </li>
+          <li>fix:https://github.com/threefish/sqltoy-idea-plugins/issues/1</li>
        </ul>
        <ul>
          <li><h4>中文</h4></li>
-         <li>1.支持xml定义跳转java调用语句</li>
-         <li>2.java调用跳转xml定义 </li>
-         <li>3.SQL语句高亮 </li>
+         <li>fix:https://github.com/threefish/sqltoy-idea-plugins/issues/1</li>
        </ul>
     ]]>
     </change-notes>

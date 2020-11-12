@@ -31,7 +31,7 @@ public class SearchUtil {
 
     public static List<PsiField> getExtendsClassFields(PsiClass psiClass) {
         List<PsiField> psiFields = new ArrayList<>();
-        List<PsiReferenceList> childrenOfAnyType = PsiTreeUtil.getChildrenOfAnyType(psiClass, PsiReferenceList.class);
+        List<PsiReferenceList> childrenOfAnyType = new ArrayList<>(PsiTreeUtil.getChildrenOfAnyType(psiClass, PsiReferenceList.class));
         for (PsiReferenceList psiReferenceList : childrenOfAnyType) {
             PsiJavaCodeReferenceElement[] referenceElements = psiReferenceList.getReferenceElements();
             for (PsiJavaCodeReferenceElement referenceElement : referenceElements) {

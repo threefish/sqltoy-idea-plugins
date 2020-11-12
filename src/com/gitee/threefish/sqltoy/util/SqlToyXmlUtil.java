@@ -135,7 +135,7 @@ public class SqlToyXmlUtil {
                                 if (Objects.nonNull(child1)) {
                                     PsiElement[] psiElements = child1.getChildren();
                                     if (Objects.nonNull(psiElements) && psiElements.length > 0) {
-                                        List<XmlTag> xmlTags = PsiTreeUtil.getChildrenOfAnyType(child1, XmlTag.class);
+                                        List<XmlTag> xmlTags = new ArrayList<>(PsiTreeUtil.getChildrenOfAnyType(child1, XmlTag.class));
                                         for (XmlTag xmlTag : xmlTags) {
                                             if ("sql".equals(xmlTag.getName())) {
                                                 XmlAttribute xmlAttribute = xmlTag.getAttribute("id");
@@ -177,10 +177,10 @@ public class SqlToyXmlUtil {
             if (psiFile instanceof PsiJavaFile) {
                 PsiJavaFile psiJavaFile = (PsiJavaFile) psiFile;
                 PsiElement originalElement = psiJavaFile.getOriginalElement();
-                List<PsiClass> psiClassList = PsiTreeUtil.getChildrenOfAnyType(originalElement, PsiClass.class);
+                List<PsiClass> psiClassList = new ArrayList<>(PsiTreeUtil.getChildrenOfAnyType(originalElement, PsiClass.class));
                 for (PsiClass psiClass : psiClassList) {
                     List<String> keys = new ArrayList<>();
-                    List<PsiField> childrenOfAnyType = PsiTreeUtil.getChildrenOfAnyType(psiClass, PsiField.class);
+                    List<PsiField> childrenOfAnyType = new ArrayList<>(PsiTreeUtil.getChildrenOfAnyType(psiClass, PsiField.class));
                     childrenOfAnyType.addAll(SearchUtil.getExtendsClassFields(psiClass));
                     for (PsiField field : childrenOfAnyType) {
                         if (SqlToyXmlUtil.isSqlToyLazyDao(field)) {
@@ -188,19 +188,19 @@ public class SqlToyXmlUtil {
                         }
                     }
                     if (CollectionUtils.isNotEmpty(keys)) {
-                        List<PsiMethod> psiMethods = PsiTreeUtil.getChildrenOfAnyType(psiClass, PsiMethod.class);
+                        List<PsiMethod> psiMethods = new ArrayList<>(PsiTreeUtil.getChildrenOfAnyType(psiClass, PsiMethod.class));
                         List<PsiMethodCallExpression> psiMethodCallExpressions = new ArrayList<>();
                         for (PsiMethod psiMethod : psiMethods) {
-                            List<PsiCodeBlock> psiCodeBlocks = PsiTreeUtil.getChildrenOfAnyType(psiMethod, PsiCodeBlock.class);
+                            List<PsiCodeBlock> psiCodeBlocks = new ArrayList<>(PsiTreeUtil.getChildrenOfAnyType(psiMethod, PsiCodeBlock.class));
                             for (PsiCodeBlock psiCodeBlock : psiCodeBlocks) {
-                                List<PsiDeclarationStatement> psiDeclarationStatements = PsiTreeUtil.getChildrenOfAnyType(psiCodeBlock, PsiDeclarationStatement.class);
+                                List<PsiDeclarationStatement> psiDeclarationStatements = new ArrayList<>(PsiTreeUtil.getChildrenOfAnyType(psiCodeBlock, PsiDeclarationStatement.class));
                                 for (PsiDeclarationStatement psiDeclarationStatement : psiDeclarationStatements) {
-                                    List<PsiLocalVariable> psiLocalVariables = PsiTreeUtil.getChildrenOfAnyType(psiDeclarationStatement, PsiLocalVariable.class);
+                                    List<PsiLocalVariable> psiLocalVariables = new ArrayList<>(PsiTreeUtil.getChildrenOfAnyType(psiDeclarationStatement, PsiLocalVariable.class));
                                     for (PsiLocalVariable psiLocalVariable : psiLocalVariables) {
                                         psiMethodCallExpressions.addAll(PsiTreeUtil.getChildrenOfAnyType(psiLocalVariable, PsiMethodCallExpression.class));
                                     }
                                 }
-                                List<PsiExpressionStatement> psiExpressionStatements = PsiTreeUtil.getChildrenOfAnyType(psiCodeBlock, PsiExpressionStatement.class);
+                                List<PsiExpressionStatement> psiExpressionStatements = new ArrayList<>(PsiTreeUtil.getChildrenOfAnyType(psiCodeBlock, PsiExpressionStatement.class));
                                 for (PsiExpressionStatement psiExpressionStatement : psiExpressionStatements) {
                                     psiMethodCallExpressions.addAll(PsiTreeUtil.getChildrenOfAnyType(psiExpressionStatement, PsiMethodCallExpression.class));
                                 }
@@ -228,7 +228,7 @@ public class SqlToyXmlUtil {
                     || text.startsWith("this." + key + ".")) {
                 PsiExpressionList psiExpressionList = PsiTreeUtil.getChildOfAnyType(psiMethodCallExpression, PsiExpressionList.class);
                 if (Objects.nonNull(psiExpressionList)) {
-                    List<PsiLiteralExpression> psiLiteralExpressions = PsiTreeUtil.getChildrenOfAnyType(psiExpressionList, PsiLiteralExpression.class);
+                    List<PsiLiteralExpression> psiLiteralExpressions = new ArrayList<>(PsiTreeUtil.getChildrenOfAnyType(psiExpressionList, PsiLiteralExpression.class));
                     for (PsiLiteralExpression psiLiteralExpression : psiLiteralExpressions) {
                         if (!psiLiteralExpression.getText().contains(" ") && id.equals(((PsiLiteralExpressionImpl) psiLiteralExpression).getInnerText())) {
                             return psiLiteralExpression;
